@@ -40,7 +40,7 @@ export const DownloadVideoForm = () => {
 
   return (
     <>
-      <form onSubmit={handleUrlForm} className='space-y-2'>
+      <form onSubmit={handleUrlForm} className='space-y-2 mt-5'>
         <Input name='url' className='valid:no-underline' placeholder='Enter your Youtube url video...' />
 
         <Button
