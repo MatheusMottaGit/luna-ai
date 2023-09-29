@@ -15,14 +15,18 @@ export async function downloadVideoRoute(app: FastifyInstance) {
 
     try {
       const videoInfo = await ytdl.getInfo(videoUrl)
-      const videoTitle = videoInfo.videoDetails.title
-      const desktopPath = path.join(os.homedir(), 'Desktop')
+      const videoTitle = videoInfo.videoDetails.title.replace(/[^\w\s]/gi, '')
+
+      const desktopPath = path.join(os.homedir(), 'OneDrive', 'Área de Trabalho')
+
+      console.log(desktopPath)
 
       const videoStream = ytdl(videoUrl, {
-        quality: 'highestvideo'
+        quality: 'highestvideo',
+        filter: 'audioandvideo'
       })
 
-      videoStream.pipe(fs.createWriteStream(path.join(desktopPath, `${videoTitle}.mp4`)))
+      videoStream.pipe(fs.createWriteStream(path.join(desktopPath, `${videoTitle.replace(/\s/g, '')}.mp4`)))
 
       videoStream
         .on('end', () => {
