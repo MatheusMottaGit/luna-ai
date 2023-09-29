@@ -1,31 +1,12 @@
-import { Github, PencilRulerIcon, Upload } from "lucide-react";
-import { Separator } from "./components/ui/separator";
+import { Github } from "lucide-react";
 import { Button } from "./components/ui/button";
 import { Textarea } from "./components/ui/textarea";
-import { DownloadVideoForm } from "./components/download-video-form";
-import { ChangeEvent, useMemo, useState } from "react";
+import DownloadVideoDialog from "./components/download-video-dialog";
+import VideoInputForm from "./components/video-input-form";
+import { useState } from "react";
 
 export function App() {
-  const [videoFile, setVideoFile] = useState<File | null>(null)
-
-  function selectFile(event: ChangeEvent<HTMLInputElement>) {
-    const { files } = event.currentTarget
-
-    if (!files) {
-      return
-    }
-
-    const selectedFile = files[0]
-    setVideoFile(selectedFile)
-  }
-
-  const previewURL = useMemo(() => {
-    if (!videoFile) {
-      return null
-    }
-
-    return URL.createObjectURL(videoFile)
-  }, [videoFile])
+  const [videoId, setVideoId] = useState<string | null>(null)
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -38,11 +19,16 @@ export function App() {
           </span>
         </div>
 
-        <Button variant="outline" className="gap-0">
-          <Github className="w-4 h-4 mr-2" />
-          GitHub
-        </Button>
+        <div className="flex gap-2 ">
+          <DownloadVideoDialog />
+
+          <Button variant="outline" className="gap-0">
+            <Github className="w-4 h-4 mr-2" />
+            GitHub
+          </Button>
+        </div>
       </div>
+
       <main className="flex-1 p-6 flex gap-6">
         <div className='flex flex-col flex-1 gap-4'>
           <Textarea
@@ -52,35 +38,7 @@ export function App() {
         </div>
 
         <aside className='flex flex-col space-y-4 w-96'>
-          <DownloadVideoForm />
-
-          <Separator />
-
-          <label htmlFor="video"
-            className="relative border flex rounded-md aspect-video cursor-pointer border-dashed flex-col items-center justify-center gap-2 text-zinc-600 text-sm"
-          >
-            {previewURL ? (
-              <video src={previewURL} controls={false} className="pointer-events-none absolute inset-0 rounded-md" />
-            ) : (
-              <>
-                <Upload className="w-4 h-4" />
-                Clique e insira o vídeo baixado aqui
-              </>
-            )}
-          </label>
-          <input type="file" id="video" accept="video/mp4" className="sr-only" onChange={selectFile} />
-
-          <form className='flex flex-col flex-1 gap-2'>
-            <Textarea
-              className='h-full resize-none leading-relaxed'
-              placeholder='Diga à Luna o que ela deve fazer com o seu conteúdo...'
-            />
-
-            <Button className='w-full font-bold'>
-              Executar
-              <PencilRulerIcon className='w-4 h-4' />
-            </Button>
-          </form>
+          <VideoInputForm onVideoUploaded={setVideoId} />
         </aside>
       </main>
     </div>
