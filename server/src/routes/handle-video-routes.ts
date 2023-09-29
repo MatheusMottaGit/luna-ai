@@ -1,6 +1,5 @@
 import { FastifyInstance } from "fastify";
 import { z } from "zod";
-import fastifyMultipart from "@fastify/multipart";
 import fs from 'node:fs';
 import ytdl from "ytdl-core";
 import ffmpeg from 'fluent-ffmpeg'
@@ -54,11 +53,26 @@ export async function videoRoutes(app: FastifyInstance) {
         })
     })
 
-    async function generateTranscription() {
+    const generateTranscription = () => new Promise<void>((resolve, reject) => {
+      openai.audio.transcriptions.create({
+        file: fs.createReadStream('videos/output.mp3'),
+        model: 'whisper-1',
+      })
+        .then(response => {
+          console.log('[TRANSCRIPTION_STARTED]')
 
-    }
+          const transcription = response.text
+          console.log(transcription.slice(0, 220).concat('...'))
+          resolve()
+        })
+        .catch(err => {
+          console.log(err)
+          reject()
+        })
+    })
 
     await download()
     await convertVideoToAudio()
+    await generateTranscription()
   })
 }
