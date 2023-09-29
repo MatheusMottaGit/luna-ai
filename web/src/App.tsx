@@ -1,8 +1,8 @@
-import { Github, PencilRulerIcon } from "lucide-react";
+import { Github, PencilRulerIcon, Upload } from "lucide-react";
 import { Separator } from "./components/ui/separator";
 import { Button } from "./components/ui/button";
 import { Textarea } from "./components/ui/textarea";
-import { UrlForm } from "./components/url-form";
+import { DownloadVideoForm } from "./components/download-video-form";
 
 export function App() {
   return (
@@ -22,10 +22,25 @@ export function App() {
         </Button>
       </div>
       <main className="flex-1 p-6 flex gap-6">
-        <aside className='flex flex-col flex-1 space-y-4'>
-          <UrlForm />
+        <div className='flex flex-col flex-1 gap-4'>
+          <Textarea
+            placeholder="Resposta da Luna..."
+            className="resize-none p-4 leading-relaxed h-full"
+          />
+        </div>
+
+        <aside className='flex flex-col space-y-4 w-96'>
+          <DownloadVideoForm />
 
           <Separator />
+
+          <label htmlFor="video"
+            className="relative border flex rounded-md aspect-video cursor-pointer border-dashed flex-col items-center justify-center gap-2 text-zinc-600 text-sm"
+          >
+            <Upload className="w-4 h-4" />
+            Clique e insira o vídeo baixado aqui
+          </label>
+          <input type="file" id="video" accept="video/mp4" className="sr-only" />
 
           <form className='flex flex-col flex-1 gap-2'>
             <Textarea
@@ -34,19 +49,11 @@ export function App() {
             />
 
             <Button className='w-full font-bold'>
-              Run
+              Executar
               <PencilRulerIcon className='w-4 h-4' />
             </Button>
           </form>
         </aside>
-
-        <div className='flex flex-col flex-1 gap-4'>
-          <Textarea
-            placeholder="Resposta da Luna..."
-            className="resize-none p-4 leading-relaxed h-full"
-          />
-        </div>
-
       </main>
     </div>
   )

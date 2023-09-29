@@ -1,4 +1,3 @@
-import { Separator } from "./ui/separator"
 import { CheckCircle, LucideDownload } from "lucide-react"
 import { Button } from "./ui/button"
 import { Input } from "./ui/input"
@@ -11,11 +10,11 @@ import Loading from "./loading-component"
 type Status = 'downloading' | 'success' | 'waiting'
 
 const statusMessages = {
-  downloading: 'Baixando o vídeo e gerando transcrição...',
+  downloading: 'Baixando o vídeo...',
   success: 'Sucesso!'
 }
 
-export const UrlForm = () => {
+export const DownloadVideoForm = () => {
   const [videoUrl, setVideoUrl] = useState('')
   const [status, setStatus] = useState<Status>('waiting')
 
@@ -24,7 +23,7 @@ export const UrlForm = () => {
 
     const formData = new FormData(event.currentTarget)
     const inputUrl = String(formData.get('url'))
-    const { embedURL, videoID } = format(inputUrl)
+    const { embedURL } = format(inputUrl)
 
     setVideoUrl(embedURL)
 
@@ -32,7 +31,7 @@ export const UrlForm = () => {
 
     await axios.get('http://localhost:3333/audio', {
       params: {
-        youtubeVideoId: videoID
+        videoUrl: embedURL
       }
     })
 
@@ -52,7 +51,7 @@ export const UrlForm = () => {
         >
           {status === 'waiting' ? (
             <>
-              Start download
+              Fazer download
               <LucideDownload className='h-4 w-4' />
             </>
           ) : status === 'downloading' ? (
@@ -69,11 +68,11 @@ export const UrlForm = () => {
         </Button>
       </form>
 
-      <Separator />
-
-      {
-        videoUrl ? <iframe src={videoUrl} className='h-[410px] w-full rounded-md'></iframe> : <EmptyVideo />
-      }
+      <div className="flex-1">
+        {
+          videoUrl ? <iframe src={videoUrl} className='w-full h-full rounded-md'></iframe> : <EmptyVideo />
+        }
+      </div>
     </>
   )
 }
