@@ -1,6 +1,7 @@
 import fastify from "fastify";
 import cors from '@fastify/cors'
 import { videoRoutes } from "./routes/handle-video-routes";
+import 'dotenv/config'
 
 const app = fastify()
 

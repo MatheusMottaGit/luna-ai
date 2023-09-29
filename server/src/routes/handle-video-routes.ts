@@ -5,6 +5,7 @@ import fs from 'node:fs';
 import ytdl from "ytdl-core";
 import ffmpeg from 'fluent-ffmpeg'
 import ffmpegStatic from 'ffmpeg-static'
+import { openai } from "../lib/openai";
 
 export async function videoRoutes(app: FastifyInstance) {
   app.get('/audio', async (request, reply) => {
@@ -52,6 +53,10 @@ export async function videoRoutes(app: FastifyInstance) {
           reject()
         })
     })
+
+    async function generateTranscription() {
+
+    }
 
     await download()
     await convertVideoToAudio()
