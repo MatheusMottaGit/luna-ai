@@ -1,6 +1,6 @@
 import fastify from "fastify";
 import cors from '@fastify/cors'
-import { videoRoutes } from "./routes/handle-video-routes";
+import { downloadVideoRoute } from "./routes/download-youtube-video";
 import 'dotenv/config'
 
 const app = fastify()
@@ -9,7 +9,7 @@ app.register(cors, {
   origin: '*'
 })
 
-app.register(videoRoutes)
+app.register(downloadVideoRoute)
 
 app.listen({
   port: 3333
