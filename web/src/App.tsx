@@ -3,8 +3,30 @@ import { Separator } from "./components/ui/separator";
 import { Button } from "./components/ui/button";
 import { Textarea } from "./components/ui/textarea";
 import { DownloadVideoForm } from "./components/download-video-form";
+import { ChangeEvent, useMemo, useState } from "react";
 
 export function App() {
+  const [videoFile, setVideoFile] = useState<File | null>(null)
+
+  function selectFile(event: ChangeEvent<HTMLInputElement>) {
+    const { files } = event.currentTarget
+
+    if (!files) {
+      return
+    }
+
+    const selectedFile = files[0]
+    setVideoFile(selectedFile)
+  }
+
+  const previewURL = useMemo(() => {
+    if (!videoFile) {
+      return null
+    }
+
+    return URL.createObjectURL(videoFile)
+  }, [videoFile])
+
   return (
     <div className="min-h-screen flex flex-col">
       <div className="px-6 py-2 flex items-center justify-between border-b">
@@ -37,10 +59,16 @@ export function App() {
           <label htmlFor="video"
             className="relative border flex rounded-md aspect-video cursor-pointer border-dashed flex-col items-center justify-center gap-2 text-zinc-600 text-sm"
           >
-            <Upload className="w-4 h-4" />
-            Clique e insira o vídeo baixado aqui
+            {previewURL ? (
+              <video src={previewURL} controls={false} className="pointer-events-none absolute inset-0 rounded-md" />
+            ) : (
+              <>
+                <Upload className="w-4 h-4" />
+                Clique e insira o vídeo baixado aqui
+              </>
+            )}
           </label>
-          <input type="file" id="video" accept="video/mp4" className="sr-only" />
+          <input type="file" id="video" accept="video/mp4" className="sr-only" onChange={selectFile} />
 
           <form className='flex flex-col flex-1 gap-2'>
             <Textarea
