@@ -11,9 +11,8 @@ datasource db {
 }
 
 model Video {
-  id             String  @id @default(uuid())
-  name           String?
-  youtubeVideoId String  @unique
-  path           String
-  transcription  String?
+  id            String  @id @default(uuid())
+  name          String?
+  path          String
+  transcription String?
 }
