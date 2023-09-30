@@ -1,5 +1,3 @@
-import { Github } from "lucide-react";
-import { Button } from "./components/ui/button";
 import { Textarea } from "./components/ui/textarea";
 import DownloadVideoDialog from "./components/download-video-dialog";
 import VideoInputForm from "./components/video-input-form";
@@ -19,14 +17,7 @@ export function App() {
           </span>
         </div>
 
-        <div className="flex gap-2 ">
-          <DownloadVideoDialog />
-
-          <Button variant="outline" className="gap-0">
-            <Github className="w-4 h-4 mr-2" />
-            GitHub
-          </Button>
-        </div>
+        <DownloadVideoDialog />
       </div>
 
       <main className="flex-1 p-6 flex gap-6">

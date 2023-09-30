@@ -40,8 +40,14 @@ export const DownloadVideoForm = () => {
 
   return (
     <>
-      <form onSubmit={handleUrlForm} className='space-y-2 mt-5'>
-        <Input name='url' className='valid:no-underline' placeholder='Enter your Youtube url video...' />
+      <form onSubmit={handleUrlForm} className='space-y-2'>
+        <Input name='url' className='valid:no-underline' placeholder='Insira a url do vídeo do Youtube...' />
+
+        <div className="h-[400px]">
+          {
+            videoUrl ? <iframe src={videoUrl} className='w-full h-full rounded-md'></iframe> : <EmptyVideo />
+          }
+        </div>
 
         <Button
           data-success={status === 'success'}
@@ -68,11 +74,6 @@ export const DownloadVideoForm = () => {
         </Button>
       </form>
 
-      <div className="flex-1">
-        {
-          videoUrl ? <iframe src={videoUrl} className='w-full h-full rounded-md'></iframe> : <EmptyVideo />
-        }
-      </div>
     </>
   )
 }

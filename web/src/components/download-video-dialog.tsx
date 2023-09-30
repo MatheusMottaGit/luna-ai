@@ -1,7 +1,7 @@
 import { FileVideo } from "lucide-react"
 import { Button } from "./ui/button"
 import { DownloadVideoForm } from "./download-video-form"
-import { Dialog, DialogContent, DialogTrigger } from "./ui/dialog"
+import { Dialog, DialogContent, DialogDescription, DialogTitle, DialogTrigger } from "./ui/dialog"
 
 const DownloadVideoDialog = () => {
   return (
@@ -15,6 +15,9 @@ const DownloadVideoDialog = () => {
       </DialogTrigger>
 
       <DialogContent className="">
+        <DialogTitle>Download do vídeo</DialogTitle>
+        <DialogDescription className="italic text-zinc-700">(O arquivo será salvo na Área de Trabalho do seu computador)</DialogDescription>
+
         <DownloadVideoForm />
       </DialogContent>
     </Dialog>
