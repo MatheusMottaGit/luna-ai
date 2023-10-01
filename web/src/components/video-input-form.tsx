@@ -48,7 +48,7 @@ const VideoInputForm = (props: VideoInputProps) => {
     <form className='space-y-2'>
       <label
         htmlFor='video'
-        className='border border-dashed flex flex-col gap-2 items-center rounded-md'
+        className='border border-dashed flex flex-col gap-2 items-center justify-center rounded-md aspect-video text-sm text-zinc-700 cursor-pointer hover:bg-zinc-900/40'
       >
         {previewURL ? (
           <video src={previewURL} controls={false} className='absolute inset-0' />
@@ -60,9 +60,9 @@ const VideoInputForm = (props: VideoInputProps) => {
         )}
       </label>
 
-      <input type="file" id="video" accept='video/mp4' onChange={selectFile} />
+      <input type="file" id="video" accept='video/mp4' className='sr-only' onChange={selectFile} />
 
-      <Button className='w-full gap-2'>
+      <Button className='w-full font-bold gap-2'>
         Carregar vídeo
         <Download className='w-4 h-4' />
       </Button>

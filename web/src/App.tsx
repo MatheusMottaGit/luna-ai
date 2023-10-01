@@ -5,6 +5,7 @@ import { Button } from "./components/ui/button";
 import { FileVideo, PencilRulerIcon } from "lucide-react";
 import { Dialog, DialogContent, DialogDescription, DialogTitle, DialogTrigger } from "./components/ui/dialog";
 import { DownloadVideoForm } from "./components/download-video-form";
+import { Separator } from "./components/ui/separator";
 
 export function App() {
   const [videoId, setVideoId] = useState<string | null>(null)
@@ -45,22 +46,22 @@ export function App() {
           />
         </div>
 
-        <aside className='flex flex-col space-y-4 w-96'>
-          <div className="space-y-4">
-            <VideoInputForm onVideoUploaded={setVideoId} />
+        <aside className='space-y-4 w-96'>
+          <VideoInputForm onVideoUploaded={setVideoId} />
 
-            <form className="space-y-2">
-              <Textarea
-                placeholder="Insira o que a Luna deve fazer com o seu conteúdo..."
-                className="resize-none p-4 leading-relaxed"
-              />
+          <Separator />
 
-              <Button className="w-full gap-2">
-                Executar
-                <PencilRulerIcon className="w-4 h-4" />
-              </Button>
-            </form>
-          </div>
+          <form className="space-y-2">
+            <Textarea
+              placeholder="Insira o que a Luna deve fazer com o seu conteúdo..."
+              className="h-[218px] resize-none p-4 leading-relaxed"
+            />
+
+            <Button className="w-full font-bold gap-2">
+              Executar
+              <PencilRulerIcon className="w-4 h-4" />
+            </Button>
+          </form>
         </aside>
       </main>
     </div>
