@@ -1,7 +1,10 @@
 import { Textarea } from "./components/ui/textarea";
-import DownloadVideoDialog from "./components/download-video-dialog";
 import VideoInputForm from "./components/video-input-form";
 import { useState } from "react";
+import { Button } from "./components/ui/button";
+import { FileVideo, PencilRulerIcon } from "lucide-react";
+import { Dialog, DialogContent, DialogDescription, DialogTitle, DialogTrigger } from "./components/ui/dialog";
+import { DownloadVideoForm } from "./components/download-video-form";
 
 export function App() {
   const [videoId, setVideoId] = useState<string | null>(null)
@@ -17,7 +20,21 @@ export function App() {
           </span>
         </div>
 
-        <DownloadVideoDialog />
+        <Dialog>
+          <DialogTrigger>
+            <Button variant='outline'>
+              Baixar vídeo do Youtube
+              <FileVideo className="w-4 h-4" />
+            </Button>
+          </DialogTrigger>
+
+          <DialogContent className="">
+            <DialogTitle>Download do vídeo</DialogTitle>
+            <DialogDescription className="italic text-zinc-700">(O arquivo será salvo na Área de Trabalho do seu computador)</DialogDescription>
+
+            <DownloadVideoForm />
+          </DialogContent>
+        </Dialog>
       </div>
 
       <main className="flex-1 p-6 flex gap-6">
@@ -29,7 +46,21 @@ export function App() {
         </div>
 
         <aside className='flex flex-col space-y-4 w-96'>
-          <VideoInputForm onVideoUploaded={setVideoId} />
+          <div className="space-y-4">
+            <VideoInputForm onVideoUploaded={setVideoId} />
+
+            <form className="space-y-2">
+              <Textarea
+                placeholder="Insira o que a Luna deve fazer com o seu conteúdo..."
+                className="resize-none p-4 leading-relaxed"
+              />
+
+              <Button className="w-full gap-2">
+                Executar
+                <PencilRulerIcon className="w-4 h-4" />
+              </Button>
+            </form>
+          </div>
         </aside>
       </main>
     </div>
